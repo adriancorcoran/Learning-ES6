@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>let and const</title>
+</head>
+
+<body>
+  <script>
+    var width = 200;
+    console.log(width);
+    function setWidth() {
+      width = 100;
+      console.log(width);
+    }
+    setWidth();
+    console.log(width);
+
+
+    var age = 100;
+    if (age > 12) {
+      let dogYears = age * 7;
+      console.log(`You are ${dogYears} dog years old`);
+    }
+
+
+
+  </script>
+</body>
+
+</html>
