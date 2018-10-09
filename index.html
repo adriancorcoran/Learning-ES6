@@ -8,24 +8,19 @@
 
 <body>
   <script>
-    const key = `abc`
-    let points = 50;
-    let winner = false;
-
-    //  let is block scoped so the second winner will not be changed
-    if (points > 40) {
-      let winner = true;
+    //  block scope won't leak variable outside onto global window
+    {
+      const name1 = 'adrian';
     }
 
-    //  person can't be reassigned, however the properties can change
-    const person = {
-      name: `adrian`,
-      age: 37
+    //  use let not var, scopes the i correctly especially with async stuff
+    for (let i = 0; i < 10; i++) {
+      console.log(i);
+
+      setTimeout(function () {
+        console.log(`The number is ${i}`);
+      }, 1000)
     }
-
-    //  can't be changed
-    const frozen = Object.freeze(person)
-
   </script>
 </body>
 
