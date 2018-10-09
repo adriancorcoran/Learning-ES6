@@ -8,23 +8,23 @@
 
 <body>
   <script>
-    var width = 200;
-    console.log(width);
-    function setWidth() {
-      width = 100;
-      console.log(width);
-    }
-    setWidth();
-    console.log(width);
+    const key = `abc`
+    let points = 50;
+    let winner = false;
 
-
-    var age = 100;
-    if (age > 12) {
-      let dogYears = age * 7;
-      console.log(`You are ${dogYears} dog years old`);
+    //  let is block scoped so the second winner will not be changed
+    if (points > 40) {
+      let winner = true;
     }
 
+    //  person can't be reassigned, however the properties can change
+    const person = {
+      name: `adrian`,
+      age: 37
+    }
 
+    //  can't be changed
+    const frozen = Object.freeze(person)
 
   </script>
 </body>
