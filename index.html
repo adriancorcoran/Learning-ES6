@@ -8,19 +8,9 @@
 
 <body>
   <script>
-    //  block scope won't leak variable outside onto global window
-    {
-      const name1 = 'adrian';
-    }
+    console.log(pizza);
+    var pizza = 'deep dish';
 
-    //  use let not var, scopes the i correctly especially with async stuff
-    for (let i = 0; i < 10; i++) {
-      console.log(i);
-
-      setTimeout(function () {
-        console.log(`The number is ${i}`);
-      }, 1000)
-    }
   </script>
 </body>
 
