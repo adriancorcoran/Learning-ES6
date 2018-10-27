@@ -1,71 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>ES 6 Learning</title>
+  <title>Arrow Functions</title>
 </head>
 
 <body>
+
+  <style>
+    .wrap {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      font-weight: 100;
+      color: white;
+    }
+
+    .box {
+      background: black url(https://unsplash.it/1500/1500?image=560&blur=0.5) center fixed no-repeat;
+      width: 50px;
+      height: 50px;
+      padding: 50px;
+      transition: width 0.2s, height 0.6s;
+      position: relative;
+    }
+
+    .box.opening {
+      width: 500px;
+      height: 500px;
+    }
+
+    .box h2 {
+      position: absolute;
+      width: 100%;
+      font-size: 100px;
+      transform: translateX(-200%);
+      transition: all 0.5s;
+      top: 0;
+    }
+
+    .box p {
+      position: absolute;
+      width: 100%;
+      transform: translateX(200%);
+      transition: all 0.5s;
+      bottom: 0;
+    }
+
+    .box.open>* {
+      transform: translateX(0%);
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="box">
+      <h2>Wes Bos</h2>
+      <p class="social">@wesbos</p>
+    </div>
+  </div>
+
   <script>
-    const names = ['tom', 'dick', 'harry'];
+    const box = document.querySelector('.box');
+    box.addEventListener('click', function () {
+      let first = 'opening';
+      let second = 'open';
 
-    // normal map function
-    const fullNames = names.map(function (name) {
-      return `${name} murphy`;
+      if (this.classList.contains(first)) {
+        [first, second] = [second, first];
+      }
+
+      this.classList.toggle(first);
+      setTimeout(() => {
+        console.log(this);
+        this.classList.toggle(second);
+      }, 500);
     });
-
-    // remove function, add fat arrow
-    const fullNames2 = names.map((name) => {
-      return `${name} murphy`;
-    });
-
-    // remove argument brackets for single variables 
-    const fullNames3 = names.map(name => {
-      return `${name} murphy`;
-    });
-
-    // implicit return (don't say it), remove return and curly brackets and move to 1 line
-    const fullNames4 = names.map(name => `${name} murphy`);
-
-    // if no arguments, use empty brackets
-    const fullNames5 = names.map(() => `murphy`);
-
-    console.log(fullNames5);
-
-    // named function
-    function sayMyName(name) {
-      alert(`Hello ${name}`);
-    }
-
-    // arrow function assigned to variable
-    const sayMyName1 = (name) => alert(`Hello ${name}`);
-    // arrow function on multiple lines
-    const sayMyName2 = (name) => {
-      alert(`Hello ${name}`);
-    }
-
-    // -----
-
-    // return an object in the function
-
-    const race = `100M Dash`;
-    const winners = ['Adrian', 'Karen', 'Toby'];
-
-    // enclose the object in round brackets
-    // if variable and key name are the same, no need to repeat
-    const win = winners.map((winner, i) => ({ name: winner, race, place: i + 1 }))
-
-    // console.table(win);
-
-    // filter
-    const ages = [45, 6, 78, 53, 21, 23, 4, 9, 13];
-
-    const old = ages.filter(age => age >= 50);
-
-    console.table(old);
-
   </script>
+
 </body>
 
 </html>
