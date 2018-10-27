@@ -3,13 +3,47 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>let and const</title>
+  <title>ES 6 Learning</title>
 </head>
 
 <body>
   <script>
-    console.log(pizza);
-    var pizza = 'deep dish';
+    const names = ['tom', 'dick', 'harry'];
+
+    // normal map function
+    const fullNames = names.map(function (name) {
+      return `${name} murphy`;
+    });
+
+    // remove function, add fat arrow
+    const fullNames2 = names.map((name) => {
+      return `${name} murphy`;
+    });
+
+    // remove argument brackets for single variables 
+    const fullNames3 = names.map(name => {
+      return `${name} murphy`;
+    });
+
+    // implicit return (don't say it), remove return and curly brackets and move to 1 line
+    const fullNames4 = names.map(name => `${name} murphy`);
+
+    // if no arguments, use empty brackets
+    const fullNames5 = names.map(() => `murphy`);
+
+    console.log(fullNames5);
+
+    // named function
+    function sayMyName(name) {
+      alert(`Hello ${name}`);
+    }
+
+    // arrow function assigned to variable
+    const sayMyName1 = (name) => alert(`Hello ${name}`);
+    // arrow function on multiple lines
+    const sayMyName2 = (name) => {
+      alert(`Hello ${name}`);
+    }
 
   </script>
 </body>
