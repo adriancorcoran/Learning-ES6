@@ -9,75 +9,58 @@
 <body>
 
   <style>
-    .wrap {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: sans-serif;
-      font-weight: 100;
-      color: white;
-    }
-
-    .box {
-      background: black url(https://unsplash.it/1500/1500?image=560&blur=0.5) center fixed no-repeat;
-      width: 50px;
-      height: 50px;
-      padding: 50px;
-      transition: width 0.2s, height 0.6s;
-      position: relative;
-    }
-
-    .box.opening {
-      width: 500px;
-      height: 500px;
-    }
-
-    .box h2 {
-      position: absolute;
-      width: 100%;
+    button {
       font-size: 100px;
-      transform: translateX(-200%);
-      transition: all 0.5s;
-      top: 0;
     }
 
-    .box p {
-      position: absolute;
-      width: 100%;
-      transform: translateX(200%);
-      transition: all 0.5s;
-      bottom: 0;
-    }
-
-    .box.open>* {
-      transform: translateX(0%);
+    .on {
+      background: #ffc600;
     }
   </style>
 
-  <div class="wrap">
-    <div class="box">
-      <h2>Wes Bos</h2>
-      <p class="social">@wesbos</p>
-    </div>
-  </div>
+  <button id="pushy">Push Me</button>
 
   <script>
-    const box = document.querySelector('.box');
-    box.addEventListener('click', function () {
-      let first = 'opening';
-      let second = 'open';
+    // when you really need 'this' - need reference to element
+    const button = document.querySelector("#pushy");
 
-      if (this.classList.contains(first)) {
-        [first, second] = [second, first];
-      }
-
-      this.classList.toggle(first);
-      setTimeout(() => {
-        console.log(this);
-        this.classList.toggle(second);
-      }, 500);
+    button.addEventListener('click', function () {
+      this.classList.toggle('on');
     });
+
+    // when you need a method on an object, can use function or new mthod syntax
+    const person = {
+      points: 23,
+      score() {
+        this.points++;
+        console.log(this.points);
+      }
+    }
+
+    // when you need to add a prototype method
+    class Car {
+      constructor(make, color) {
+        this.make = make;
+        this.color = color;
+      }
+    }
+
+    const bmw = new Car('bmw', 'blue');
+    const sub = new Car('sub', 'white');
+
+    Car.prototype.summarize = function () {
+      return `This car is a ${this.make} and it's definitely ${this.color}!`;
+    }
+
+    // when you need the aryguments object
+    const orderChildren = function () {
+      const children = Array.from(arguments);
+      return children.map((child, i) => {
+        return `${child} was child #${i}`;
+      });
+      console.log(arguments);
+    }
+
   </script>
 
 </body>
