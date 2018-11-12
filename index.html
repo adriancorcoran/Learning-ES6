@@ -1,40 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Arrow Functions</title>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Arrow Functions</title>
-</head>
+    <style>
+      body {
+        background-color: #f5f5f5;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+      div {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+      }
+      .data-div {
+        margin: 0px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        /* grid-template-columns: 1fr 1fr 1fr; */
+        grid-gap: 20px;
+      }
+      .data-div > p {
+        background-color: #f5f5f5;
+        margin: 0;
+        min-height: 70px;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
+    <!--
+      <div id="people">
+        <h2>People</h2>
+        <div id="people-data" class="data-div">Waiting for data...</div>
+      </div>
+      <div id="planets">
+        <h2>Planets</h2>
+        <div id="planet-data" class="data-div">Waiting for data...</div>
+      </div>
+      <div id="films">
+        <h2>Films</h2>
+        <div id="film-data" class="data-div">Waiting for data...</div>
+      </div>
+    -->
 
-  <script>
-    // 1. Given this array: `[3,62,234,7,23,74,23,76,92]`, use the array filter method and an arrow function to create an array of the numbers greater than `70`
-    const numbers = [3, 62, 234, 7, 23, 74, 23, 76, 92];
+    <div>
+      <h2>Video</h2>
+      <!-- <div id="video" class="data-div">Waiting for data...</div> -->
+      <video controls class="video-div">Waiting for data...</video>
+    </div>
 
-  </script>
-</body>
+    <script>
+      // https://swapi.co/api/people/
+      // https://swapi.co/api/planets/
+      // https://swapi.co/api/films/
 
-</html>
-<!DOCTYPE html>
-<html lang="en">
+      // ------------------------------------------------------------
+      // video 1
 
-<head>
-  <meta charset="UTF-8">
-  <title>Arrow Functions</title>
-</head>
+      // fetch("swapi.co/api/people/")
+      //   .then(data => {
+      //     return data.json();
+      //   })
+      //   .then(data => {
+      //     console.log(data);
+      //   })
+      //   .catch(err => {
+      //     console.error(Error(err));
+      //   });
 
-<body>
+      const video = document.querySelector(".video-div");
 
-  <script>
-    // 1. Given this array: `[3,62,234,7,23,74,23,76,92]`, use the array filter method and an arrow function to create an array of the numbers greater than `70`
-    const nums = [3, 62, 234, 7, 23, 74, 23, 76, 92];
-
-    const old = nums.filter((item) => item > 70)
-
-    console.log(old);
-
-  </script>
-</body>
-
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(mediaStream => {
+          console.log(mediaStream);
+          video.srcObject = mediaStream;
+          video.load();
+          video.play();
+        })
+        .catch(err => {
+          console.error(Error(err));
+        });
+    </script>
+  </body>
 </html>

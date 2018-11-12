@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Arrow Functions</title>
+
+    <style>
+      body {
+        background-color: #f5f5f5;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+      div {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+      }
+      .data-div {
+        margin: 0px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        /* grid-template-columns: 1fr 1fr 1fr; */
+        grid-gap: 20px;
+      }
+      .data-div > p {
+        background-color: #f5f5f5;
+        margin: 0;
+        min-height: 70px;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="people">
+      <h2>People</h2>
+      <div id="people-data" class="data-div">Waiting for data...</div>
+    </div>
+    <div id="planets">
+      <h2>Planets</h2>
+      <div id="planet-data" class="data-div">Waiting for data...</div>
+    </div>
+    <div id="films">
+      <h2>Films</h2>
+      <div id="film-data" class="data-div">Waiting for data...</div>
+    </div>
+    <script>
+      // ------------------------------------------------------------
+      // video 1
+
+      // const postsPromise = fetch("https://swapi.co/api/people/");
+      // postsPromise
+      //   .then(data => data.json())
+      //   .then(data => {
+      //     console.log(data);
+      //   })
+      //   .catch(err => console.error(err));
+
+      // ------------------------------------------------------------
+      // video 2
+      // const p = new Promise((resolve, reject) => {
+      //   setTimeout(function() {
+      //     // resolve("Now the promise is resolved");
+      //     reject(Error("Now the promise is rejected"));
+      //   }, 2000);
+      // });
+
+      // p.then(data => console.log(data)).catch(err => console.error(err));
+
+      // ------------------------------------------------------------
+      // video 3
+
+      // const posts = [
+      //   { title: "I love JavaScript", author: "Wes Bos", id: 1 },
+      //   { title: "CSS!", author: "Chris Coyier", id: 2 },
+      //   { title: "Dev tools tricks", author: "Addy Osmani", id: 3 }
+      // ];
+
+      // const authors = [
+      //   { name: "Wes Bos", twitter: "@wesbos", bio: "Canadian Developer" },
+      //   {
+      //     name: "Chris Coyier",
+      //     twitter: "@chriscoyier",
+      //     bio: "CSS Tricks and CodePen"
+      //   },
+      //   { name: "Addy Osmani", twitter: "@addyosmani", bio: "Googler" }
+      // ];
+
+      // function getPostById(id) {
+      //   // create a new promise
+      //   return new Promise((resolve, reject) => {
+      //     // delay the resolve
+      //     setTimeout(() => {
+      //       // find the post
+      //       const post = posts.find(post => post.id === id);
+      //       if (post) {
+      //         // send the post back
+      //         resolve(post);
+      //       } else {
+      //         // send an error
+      //         reject(Error("no post found"));
+      //       }
+      //     }, 2000);
+      //   });
+      // }
+
+      // function addAuthor(post) {
+      //   return new Promise((resolve, reject) => {
+      //     setTimeout(() => {
+      //       const authorDetails = authors.find(
+      //         author => author.name === post.author
+      //       );
+      //       if (authorDetails) {
+      //         post.author = authorDetails;
+      //         resolve(post);
+      //       } else {
+      //         // send an error
+      //         reject(Error("no author found"));
+      //       }
+      //     }, 2000);
+      //   });
+      // }
+
+      // getPostById(2)
+      //   .then(post => {
+      //     console.log(post);
+      //     return addAuthor(post);
+      //   })
+      //   .then(post => console.log(post))
+      //   .catch(err => console.log(err));
+
+      // ------------------------------------------------------------
+      // video 3
+
+      // const weather = new Promise(resolve => {
+      //   setTimeout(() => {
+      //     resolve({ temp: 29, conditions: "sunny with clouds" });
+      //   }, 2000);
+      // });
+
+      // const tweets = new Promise(resolve => {
+      //   setTimeout(() => {
+      //     resolve(["i like chipos", `I don't like fish`]);
+      //   }, 1000);
+      // });
+
+      // Promise.all([weather, tweets]).then(responses => {
+      //   const [weatherInfo, tweetInfo] = responses;
+      //   console.log(weatherInfo, tweetInfo);
+      // });
+
+      // ------------------------------------------------------------
+      let peopleDataDiv = document.getElementById("people-data");
+      let filmDataDiv = document.getElementById("film-data");
+
+      function displayPlanets() {
+        setTimeout(() => {
+          let planetDataDiv = document.getElementById("planet-data");
+          const planetData = fetch("https://swapi.co/api/planets/");
+          planetData
+            .then(data => data.json())
+            .then(data => {
+              planetDataDiv.innerHTML = turnDataToString(data, "name");
+            });
+        }, 2000);
+      }
+
+      displayPlanets();
+
+      const people = fetch("https://swapi.co/api/people/");
+      const films = fetch("https://swapi.co/api/films/");
+
+      const mydata = Promise.all([people, films])
+        .then(responses => {
+          return Promise.all(responses.map(response => response.json()));
+        })
+        .then(data => {
+          const [people, films] = data;
+          setTimeout(() => {
+            peopleDataDiv.innerHTML = turnDataToString(people, "name");
+          }, 3000);
+          setTimeout(() => {
+            filmDataDiv.innerHTML = turnDataToString(films, "title");
+          }, 1500);
+        });
+
+      function turnDataToString(data, field) {
+        return `<p>${data.results
+          .map(result => result[field])
+          .join("</p><p>")}</p>`;
+      }
+    </script>
+  </body>
+</html>
