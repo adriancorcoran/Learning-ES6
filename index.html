@@ -132,14 +132,14 @@
       // ------------------------------------------------------------
       // video 3
 
-      function breathe(amount) {
-        return new Promise((resolve, reject) => {
-          if (amount < 500) {
-            reject("Too small!");
-          }
-          setTimeout(() => resolve(`Done for ${amount} ms`), amount);
-        });
-      }
+      // function breathe(amount) {
+      //   return new Promise((resolve, reject) => {
+      //     if (amount < 500) {
+      //       reject("Too small!");
+      //     }
+      //     setTimeout(() => resolve(`Done for ${amount} ms`), amount);
+      //   });
+      // }
 
       // try catching errors
       // async function go() {
@@ -167,37 +167,77 @@
       // ------------------------------------------------------------
       // video 4
 
-      // creating a high order function
-      function catchErrors(fn) {
-        return function(...args) {
-          // capture arguments and pass them through
-          return fn(...args).catch(err => {
-            //  tack on a catch to catch any errors that occur
-            console.error(Error(err));
-          });
-          // return fn().catch(errorHandler(err));    //  pass it off to an error handler
-        };
+      // // creating a high order function
+      // function catchErrors(fn) {
+      //   return function(...args) {
+      //     // capture arguments and pass them through
+      //     return fn(...args).catch(err => {
+      //       //  tack on a catch to catch any errors that occur
+      //       console.error(Error(err));
+      //     });
+      //     // return fn().catch(errorHandler(err));    //  pass it off to an error handler
+      //   };
+      // }
+
+      // async function go(name) {
+      //   let res;
+      //   console.log(`starting for ${name}`);
+      //   res = await breathe(600);
+      //   console.log(res);
+      //   res = await breathe(800);
+      //   console.log(res);
+      //   res = await breathe(100);
+      //   console.log(res);
+      //   res = await breathe(2000);
+      //   console.log(res);
+      //   res = await breathe(500);
+      //   console.log(res);
+      //   console.log("end");
+      // }
+
+      // const wrappedFunction = catchErrors(go);
+
+      // wrappedFunction("Adrian");
+
+      // ------------------------------------------------------------
+      // video 4
+
+      // get the json data on each call
+
+      // async function go() {
+      //   const p1 = await fetch("https://api.github.com/users/wesbos").then(r =>
+      //     r.json()
+      //   );
+      //   const p2 = await fetch("https://api.github.com/users/stolinski").then(
+      //     r => r.json()
+      //   );
+      //   // wait for them
+      //   const res = await Promise.all([p1, p2]);console.log(res);
+      // }
+
+      // // get the initial data then map and get more promises
+      // async function go() {
+      //   const p1 = await fetch("https://api.github.com/users/wesbos");
+      //   const p2 = await fetch("https://api.github.com/users/stolinski");
+      //   // wait for them
+      //   const res = await Promise.all([p1, p2]);
+      //   const rawData = res.map(r => r.json()); //  returns array of Promises
+      //   const [wes, scott] = await Promise.all(rawData);
+      //   console.log(wes, scott);
+      // }
+
+      // go();
+
+      async function getData(names) {
+        const promises = names.map(name =>
+          fetch(`https://api.github.com/users/${name}`).then(r => r.json())
+        );
+        // const people = await Promise.all(promises);
+        const people = await Promise.race(promises);
+        console.log(people);
       }
 
-      async function go(name) {
-        let res;
-        console.log(`starting for ${name}`);
-        res = await breathe(600);
-        console.log(res);
-        res = await breathe(800);
-        console.log(res);
-        res = await breathe(100);
-        console.log(res);
-        res = await breathe(2000);
-        console.log(res);
-        res = await breathe(500);
-        console.log(res);
-        console.log("end");
-      }
-
-      const wrappedFunction = catchErrors(go);
-
-      wrappedFunction("Adrian");
+      getData(["wesbos", "stolinski", "adriancorcoran", "adriancorcoran36"]);
     </script>
   </body>
 </html>
